@@ -27,7 +27,11 @@
   word-break: break-word;
 }
 
-.line:last-child {
+.idle {
+  color: var(--faint);
+}
+
+.event {
   color: var(--text);
 }
 
