@@ -53,7 +53,7 @@ export const projects: Project[] = [
       {
         src: "/images/hub-panel.webp",
         width: 932,
-        height: 1367,
+        height: 1412,
         alt: "SRE Hub's menu-bar panel with a portfolio chart and two open positions, in demo mode.",
       },
     ],
