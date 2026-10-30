@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Stage from "@/components/Stage";
 import { projects } from "@/lib/site";
 import styles from "@/components/Page.module.css";
 
@@ -28,18 +29,58 @@ export default async function ProjectPage(props: PageProps<"/work/[slug]">) {
 
       <section className={styles.section}>
         <h2 className={styles.label}>Overview</h2>
-        <div className={styles.placeholder}>Overview copy</div>
+        <p className={styles.body}>{project.overview}</p>
+      </section>
+
+      {project.sections.map((s) => {
+        const List = s.ordered ? "ol" : "ul";
+        return (
+          <section key={s.label} className={styles.section}>
+            <h2 className={styles.label}>{s.label}</h2>
+            {s.text && <p className={styles.body}>{s.text}</p>}
+            {s.items && (
+              <List className={styles.items}>
+                {s.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </List>
+            )}
+            {s.code && (
+              <pre className={styles.code}>
+                <code>{s.code}</code>
+              </pre>
+            )}
+            {s.link && (
+              <p className={styles.body}>
+                {s.link.before} <a href={s.link.href}>{s.link.label}</a>.
+              </p>
+            )}
+          </section>
+        );
+      })}
+
+      <section className={styles.section}>
+        <h2 className={styles.label}>{project.shotsLabel}</h2>
+        <Stage shots={project.shots} />
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.label}>How it works</h2>
-        <div className={styles.placeholder}>Diagram or walkthrough</div>
+        <h2 className={styles.label}>Stack</h2>
+        <p className={styles.body}>{project.stack}</p>
       </section>
 
-      <section className={styles.section}>
-        <h2 className={styles.label}>Screenshots</h2>
-        <div className={`${styles.placeholder} ${styles.tall}`}>Screenshots</div>
-      </section>
+      {project.links && (
+        <section className={styles.section}>
+          <h2 className={styles.label}>Links</h2>
+          <ul className={styles.linkList}>
+            {project.links.map((l) => (
+              <li key={l.href}>
+                <a href={l.href}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </article>
   );
 }
