@@ -15,30 +15,31 @@ export default function Home() {
         </p>
       </header>
 
-      <div className={styles.grid}>
+      <ul className={styles.rows}>
         {projects.map((p) => (
-          <Link key={p.slug} href={`/work/${p.slug}`} className={styles.card}>
-            <span className={styles.meta}>
-              <span>{p.name}</span>
-              <span className={styles.kind}>{p.kind}</span>
-            </span>
-            <span className={styles.art}>
-              {p.image ? (
-                <Image
-                  src={p.image.src}
-                  width={p.image.width}
-                  height={p.image.height}
-                  alt={p.image.alt}
-                  className={styles.img}
-                />
-              ) : (
-                <span className={styles.placeholder}>Image</span>
-              )}
-            </span>
-            <span className={styles.foot}>{p.summary}</span>
-          </Link>
+          <li key={p.slug}>
+            <Link href={`/work/${p.slug}`} className={styles.row}>
+              <span className={styles.text}>
+                <span className={styles.name}>{p.name}</span>
+                <span className={styles.kind}>{p.kind}</span>
+                <span className={styles.summary}>{p.summary}</span>
+                <span className={styles.open}>View project</span>
+              </span>
+              <span className={styles.stage}>
+                {p.shots.map((s) => (
+                  <span
+                    key={s.src}
+                    className={s.width > s.height ? styles.shotWide : styles.shotTall}
+                  >
+                    <Image src={s.src} width={s.width} height={s.height} alt={s.alt} />
+                    {s.label && <span className={styles.label}>{s.label}</span>}
+                  </span>
+                ))}
+              </span>
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </>
   );
 }
